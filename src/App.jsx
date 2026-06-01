@@ -1,17 +1,13 @@
-import FocusInput from "./FocusInput";
-import FilterList from "./FilterList";
+import React, {useState, useMemo, useEffect} from "react";
+import { generateMockData } from "./mockData";
+import DashboardMetrics from './DashboardMetrics';
 
 function App() {
-  const DATA = [
-    {id: 1, name: 'A'},
-    {id: 2, name: 'Ab'},
-    {id: 3, name: 'Bbab'},
-    {id: 4, name: 'Caba'}
-  ]
+  const [rawData, setRawData] = useState(()=>generateMockData());
+
   return (
     <>
-     <FocusInput />
-     <FilterList users={DATA} />
+    <DashboardMetrics filteredData={rawData} />
     </>
   )
 }
