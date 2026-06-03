@@ -118,7 +118,7 @@ function AnalyticTable({data}){
                                 Сумма
                                 <div style={resizeStyle} onMouseDown={(e)=>handleMouseDown(e, 'amount', thAmountRef.current)} />
                             </th>
-                            <th ref={thCateforyRef} style={{width: colWidth.category, position:'relative', border: '1px solid #ddd'}}>
+                            <th ref={thCategoryRef} style={{width: colWidth.category, position:'relative', border: '1px solid #ddd'}}>
                                 Категория
                                 <div style={resizeStyle} onMouseDown={(e)=>handleMouseDown(e, 'category', thCategoryRef.current)} />
                             </th>
@@ -154,5 +154,7 @@ function AnalyticTable({data}){
             </button>
             )}
         </div>
-    )
+    );
 }
+
+export default AnalyticTable;
