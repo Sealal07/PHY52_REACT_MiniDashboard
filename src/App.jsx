@@ -3,6 +3,7 @@ import { generateMockData } from "./mockData";
 import DashboardMetrics from './DashboardMetrics';
 import FilterPanel from "./FilterPanel";
 import AnalyticTable from './AnalyticTable';
+import TaskModal from "./TaskModal";
 
 function App() {
   const [rawData, setRawData] = useState(()=>generateMockData());
@@ -21,7 +22,23 @@ function App() {
       )
   },[rawData, filters.search, filters.category, filters.status]);
 
-  const handleNewItem = () => {};
+
+  // слушатель горячих клавиш
+  useEffect(()=>{
+    const handleKeyDown = (e) => {
+      if(e.altKey && (e.key ==='n' || e.key ==='т' || e.key ==='N' || e.key ==='Т')){
+        e.preventDefault();
+        setModalOpen(true);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return ()=> window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+
+  const handleAddNewItem = (newItem) => {
+    setRawData(prev=>[newItem, ...prev]);
+  };
 
   return (
     <>
@@ -32,12 +49,20 @@ function App() {
     <FilterPanel 
       filters={filters}
       setFilters={setFilters}
-      onOpenModal={handleNewItem}
+      onOpenModal={()=>setModalOpen(true)}
     />
 
     {/* таблица данных */}
     <AnalyticTable data={filteredData} />
+
+    {/* модальное окно */}
+    <TaskModal 
+      isOpen={isModalOpen}
+      onClose={()=>setModalOpen(false)}
+      onAdd={handleAddNewItem}
+    />
     </>
+    
   )
 }
 
